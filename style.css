@@ -124,3 +124,13 @@ body {
   border: 3rem solid white;
   box-shadow: 0 2rem 5rem 1rem rgba(0, 0, 0, 0.1);
 }
+
+.btn {
+  padding: 2rem 3rem;
+  border: none;
+  background-color: red;
+  border-radius: 1rem;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}

@@ -1,10 +1,11 @@
 'use strict';
-
+const button = document.querySelector('.btn');
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
-const getCountyData = function (country) {
+const getCountryData = function () {
+  let country = prompt('Type country name');
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
   request.send();
@@ -23,12 +24,14 @@ const getCountyData = function (country) {
         <p class="country__row"><span>🗣️</span>${
           Object.values(data.languages)[0]
         }</p>
-        <p class="country__row"><span>💰</span>${data.currencies.EUR.name}</p>
+        <p class="country__row"><span>💰</span>${
+          Object.values(data.currencies)[0].name
+        }</p>
     </div>
 </article>`;
+    console.log(Object.values(data.currencies)[0].name);
     countriesContainer.insertAdjacentHTML('beforeend', html);
     countriesContainer.style.opacity = 1;
   });
 };
-const country = prompt('Tap a country name');
-getCountyData(country);
+button.addEventListener('click', getCountryData);
