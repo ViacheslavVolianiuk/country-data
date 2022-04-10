@@ -4,15 +4,8 @@ const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
-const getCountryData = function () {
-  let country = prompt('Type country name');
-  const request = new XMLHttpRequest();
-  request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
-  request.send();
-  request.addEventListener('load', function () {
-    console.log(JSON.parse(this.responseText));
-    const [data] = JSON.parse(this.responseText);
-    const html = `
+const renderCountry = function (data) {
+  const html = `
   <article class="country">
     <img class="country__img" src="${data.flags.png}" />
     <div class="country__data">
@@ -20,7 +13,7 @@ const getCountryData = function () {
         <h4 class="country__region">${data.region}</h4>
         <p class="country__row"><span>👫</span>${(
           +data.population / 1000000
-        ).toFixed(1)}</p>
+        ).toFixed(1)} mil people</p>
         <p class="country__row"><span>🗣️</span>${
           Object.values(data.languages)[0]
         }</p>
@@ -29,9 +22,20 @@ const getCountryData = function () {
         }</p>
     </div>
 </article>`;
-    console.log(Object.values(data.currencies)[0].name);
-    countriesContainer.insertAdjacentHTML('beforeend', html);
-    countriesContainer.style.opacity = 1;
+  // console.log(Object.values(data.currencies)[0].name);
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
+};
+
+const getCountryData = function () {
+  let country = prompt('Type country name').toLowerCase();
+  const request = new XMLHttpRequest();
+  request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
+  request.send();
+  request.addEventListener('load', function () {
+    console.log(JSON.parse(this.responseText));
+    const [data] = JSON.parse(this.responseText);
+    renderCountry(data);
   });
 };
 button.addEventListener('click', getCountryData);
